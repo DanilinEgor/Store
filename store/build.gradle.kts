@@ -1,39 +1,26 @@
 plugins {
-    id("org.mobilenativefoundation.store.multiplatform")
+    id("org.mobilenativefoundation.store.kotlin")
     alias(libs.plugins.kover)
 }
 
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.kotlin.stdlib)
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.serialization.core)
-                api(libs.kotlinx.atomic.fu)
-                implementation(libs.touchlab.kermit)
-                implementation(projects.multicast)
-                implementation(projects.cache)
-                api(projects.core)
-            }
-        }
+dependencies {
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.core)
+    api(libs.kotlinx.atomic.fu)
+    implementation(libs.touchlab.kermit)
+    implementation(projects.multicast)
+    implementation(projects.cache)
+    api(projects.core)
 
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.junit)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.turbine)
-            }
-        }
-    }
-}
-
-android {
-    namespace = "org.mobilenativefoundation.store.store5"
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
 }
 
 kover {
-
     reports {
         total {
             xml {

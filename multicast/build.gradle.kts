@@ -1,28 +1,14 @@
 plugins {
-    id("org.mobilenativefoundation.store.multiplatform")
+    id("org.mobilenativefoundation.store.kotlin")
 }
 
-kotlin {
+dependencies {
+    api(libs.kotlinx.atomic.fu)
+    implementation(libs.kotlinx.coroutines.core)
 
-    sourceSets {
-
-        val commonMain by getting {
-            dependencies {
-                api(libs.kotlinx.atomic.fu)
-                implementation(libs.kotlinx.coroutines.core)
-            }
-        }
-
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.junit)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.turbine)
-            }
-        }
-    }
-}
-
-android {
-    namespace = "org.mobilenativefoundation.store.multicast"
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
 }

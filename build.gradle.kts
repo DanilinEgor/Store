@@ -7,11 +7,9 @@ buildscript {
     repositories {
         mavenCentral()
         gradlePluginPortal()
-        google()
     }
 
     dependencies {
-        classpath(libs.android.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.kotlin.serialization.plugin)
         classpath(libs.dokka.gradle.plugin)
@@ -19,7 +17,6 @@ buildscript {
         classpath(libs.jacoco.gradle.plugin)
         classpath(libs.maven.publish.plugin)
         classpath(libs.atomic.fu.gradle.plugin)
-        classpath(libs.kmmBridge.gradle.plugin)
         classpath(libs.binary.compatibility.validator)
     }
 }
@@ -27,7 +24,6 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
-        google()
     }
 }
 
@@ -49,15 +45,14 @@ subprojects {
 tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = "21"
         }
     }
 
     withType<JavaCompile>().configureEach {
-        sourceCompatibility = JavaVersion.VERSION_11.name
-        targetCompatibility = JavaVersion.VERSION_11.name
+        sourceCompatibility = JavaVersion.VERSION_21.name
+        targetCompatibility = JavaVersion.VERSION_21.name
     }
 }
 
-// Workaround for https://youtrack.jetbrains.com/issue/KT-62040
 tasks.getByName("wrapper")

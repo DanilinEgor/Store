@@ -13,5 +13,4 @@ rootProject.name = "Store5"
 include ':store'
 include ':cache'
 include ':multicast'
-include ':rx2'
 include ':core'
