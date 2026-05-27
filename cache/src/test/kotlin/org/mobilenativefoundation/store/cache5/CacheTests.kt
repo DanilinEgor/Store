@@ -1,5 +1,11 @@
 package org.mobilenativefoundation.store.cache5
 
+import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.test.runTest
+import org.junit.Ignore
+import org.junit.Test
+import kotlin.time.Duration.Companion.milliseconds
+
 class CacheTests {
     private val cache: Cache<String, String> = CacheBuilder<String, String>().build()
 
@@ -18,7 +24,10 @@ class CacheTests {
     fun getAllPresent() {
         cache.put("key1", "value1")
         cache.put("key2", "value2")
-        assertEquals(mapOf("key1" to "value1", "key2" to "value2"), cache.getAllPresent(listOf("key1", "key2")))
+        assertEquals(
+            mapOf("key1" to "value1", "key2" to "value2"),
+            cache.getAllPresent(listOf("key1", "key2"))
+        )
         assertEquals(mapOf("key1" to "value1", "key2" to "value2"), cache.getAllPresent())
     }
 
@@ -26,7 +35,10 @@ class CacheTests {
     @Test
     fun putAll() {
         cache.putAll(mapOf("key1" to "value1", "key2" to "value2"))
-        assertEquals(mapOf("key1" to "value1", "key2" to "value2"), cache.getAllPresent(listOf("key1", "key2")))
+        assertEquals(
+            mapOf("key1" to "value1", "key2" to "value2"),
+            cache.getAllPresent(listOf("key1", "key2"))
+        )
     }
 
     @Test
@@ -76,7 +88,9 @@ class CacheTests {
     fun expireAfterAccess() =
         runTest {
             var timeNs = 0L
-            val cache = CacheBuilder<String, String>().expireAfterAccess(100.milliseconds).ticker { timeNs }.build()
+            val cache =
+                CacheBuilder<String, String>().expireAfterAccess(100.milliseconds).ticker { timeNs }
+                    .build()
             cache.put("key", "value")
 
             timeNs += 50.milliseconds.inWholeNanoseconds
@@ -90,7 +104,9 @@ class CacheTests {
     fun expireAfterWrite() =
         runTest {
             var timeNs = 0L
-            val cache = CacheBuilder<String, String>().expireAfterWrite(100.milliseconds).ticker { timeNs }.build()
+            val cache =
+                CacheBuilder<String, String>().expireAfterWrite(100.milliseconds).ticker { timeNs }
+                    .build()
             cache.put("key", "value")
 
             timeNs += 50.milliseconds.inWholeNanoseconds
